@@ -1,0 +1,56 @@
+#header {
+	background-color: red;
+}
+
+#header h1 {
+	margin: 0px;
+	padding: 5px;
+	font-size: 40px;
+	line-height: 40px;
+	font-weight: bold;
+	color: white;
+}
+
+#header h2 {
+	padding-left: 15px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	font-size: 20px;
+	margin: 0px;
+	color: black;
+}
+
+#header a {
+	color: #cccccc;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+html {
+	padding: 0px;
+	margin: 0px;
+}
+
+.bodywrapper {
+	padding: 10px;
+}
+
+h4 {
+	margin-left: 0px;
+	margin-bottom: 5px;
+	margin-right: 0px;
+	margin-top: 15px;
+	padding: 0px;
+}
+
+.box {
+	width: 25%;
+	display: inline-block;
+	vertical-align: text-top;
+}
+

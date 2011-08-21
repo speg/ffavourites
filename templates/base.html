@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>ffavourites &hearts;</title>
+<link rel="stylesheet" type="text/css" href="/static/style.css" />
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+
+{% block header %}
+	<div id="header" class="bodywrapper">
+	{% if logged_in %}
+	Hello, {{ name }}! <a href="{% url django.contrib.auth.views.logout %}">Logout?</a>
+	{% else %}
+	<a href="{% url django.contrib.auth.views.login %}">Login</a>
+	<a href="{% url bookmarks.views.register %}">Register</a>
+	{% endif %}
+	<h1>&hearts; ffavourites</h1>
+	<h2>your ffavourite sites. &hearts;</h2>	
+	</div>
+{% endblock %}
+{% block content %}
+<div class="bodywrapper">
+
+
+{% if newest %}
+	<div class="box">
+	<h4>New &hearts;</h4>
+	{% for b in newest %}
+	<li>
+	<a href="{{b.url}}">{{ b.title }}</a>
+	</li>
+	{% endfor %}
+	</div>
+{% endif %}
+
+
+<div class="box"><h4>Popular &hearts;</h4>
+<!-- put the new fans here -->
+</div>
+
+{% if yours %}
+	<div class='box'><h4>Yours &hearts;</h4>
+	{% for b in yours %}
+	<li>
+	<a href="{{b.url}}">{{ b.title }}</a>
+	</li>
+	{% endfor %}
+	</div>
+{% endif %}
+
+<h1>ffavourites &hearts;</h1>
+<form action="/add" method="get">
+<input type="text" name="title" value="title" />
+<input type="text" name="url" value="http://" />
+<input type="submit" value="Add" />
+</form>
+{% endblock %}
+</div> <!-- //END BODY WRAPPER -->
+</body>
+</html>
