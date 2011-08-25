@@ -59,8 +59,8 @@ def add(request):
 	#get or create bookmark
 	obj, created = Bookmark.objects.get_or_create(title=request.GET['title'], url=url)
 	#add to user's profile
-	ub = UserBookmarked(user=request.user.get_profile(),bookmark=obj)
-	ub.save()
+	ub = UserBookmarked.objects.get_or_create(user=request.user.get_profile(),bookmark=obj)
+	#ub.save()
 	
 	return HttpResponseRedirect(reverse('bookmarks.views.index'))
 	#return HttpResponse('Saved!')
