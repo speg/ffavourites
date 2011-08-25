@@ -3,62 +3,120 @@
 <head>
 <meta charset="utf-8" />
 <title>ffavourites &hearts;</title>
-<link rel="stylesheet" type="text/css" href="/static/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+<!-- <link rel="stylesheet/less" href="/static/less/bootstrap.less"> -->
+<!-- <script src="/static/less.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="/static/style.css" /> -->
+<!-- <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.0.0.min.css"> -->
 <!--[if IE]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 </head>
 <body>
 
+
+{% block topbar %}
+ <div class="topbar">
+      <div class="fill">
+        <div class="container fixed">
+          <h3><a href="#">&hearts;</a></h3>
+          <ul>
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            {% if logged_in %}<li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>
+            {% else %}<li><a href="{% url django.contrib.auth.views.login %}">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block modal %}
+<div class="modal" style="position: absolute; top: 100px; width:360px;left: 200px; margin: 0 auto; z-index: 1;opacity:.99;">
+          <div class="modal-header">
+            <h2>Sign In</h2>
+            <a href="#" class="close">&times;</a>
+          </div>
+          <div class="modal-body">
+			<form class="form-stacked">
+			<label for="login">Login</label>
+			<input id="login" type="text" value="" name="login" />
+			<label for="password">Password</label>
+			<input id="password" type="password" name="password" />
+			</form>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn primary">Sign In</a>
+            <a href="#" class="btn secondary">Cancel</a>
+          </div>
+</div>
+{% endblock %}
+
+
 {% block header %}
-	<div id="header" class="bodywrapper">
+	<div class="container">
+	<div class="hero-unit">
 	{% if logged_in %}
-	Hello, {{ name }}! <a href="{% url django.contrib.auth.views.logout %}">Logout?</a>
+	Hello, {{ name }}!
 	{% else %}
-	<a href="{% url django.contrib.auth.views.login %}">Login</a>
 	<a href="{% url bookmarks.views.register %}">Register</a>
 	{% endif %}
-	<h1>&hearts; ffavourites</h1>
-	<h2>your ffavourite sites. &hearts;</h2>	
+	<h1>&hearts; ffavourites <small>your ffavourite sites. &hearts;</small></h1>
 	</div>
 {% endblock %}
+
+
 {% block content %}
-<div class="bodywrapper">
-
-
+<div class="row">
 {% if newest %}
-	<div class="box">
-	<h4>New &hearts;</h4>
+	<div class="span5 columns offset1">
+	<h2>New &hearts;</h2>
 	{% for b in newest %}
 	<li>
-	<a href="{{b.url}}">{{ b.title }}</a>
+	<a href="http://{{b.url}}">{{ b.title }}</a>
 	</li>
 	{% endfor %}
 	</div>
 {% endif %}
 
 
-<div class="box"><h4>Popular &hearts;</h4>
+<div class="span5 columns"><h2>Popular &hearts;</h2>
 <!-- put the new fans here -->
+{% for b in popular %}
+	<li>
+	<a href="http://{{b.bookmark__url}}">{{ b.bookmark__title }}</a>
+	</li>
+	{% endfor %}
 </div>
 
 {% if yours %}
-	<div class='box'><h4>Yours &hearts;</h4>
+	<div class="span5 columns"><h2>Your &hearts;</h2>
 	{% for b in yours %}
 	<li>
-	<a href="{{b.url}}">{{ b.title }}</a>
+	<a href="http://{{b.url}}">{{ b.title }}</a>
 	</li>
 	{% endfor %}
 	</div>
 {% endif %}
+</div> <!-- end main row -->
 
-<h1>ffavourites &hearts;</h1>
-<form action="/add" method="get">
-<input type="text" name="title" value="title" />
-<input type="text" name="url" value="http://" />
-<input type="submit" value="Add" />
-</form>
+<div style="height:20px;width:1px;"></div>
+<div class="row">
+	
+	<div class="span10 columns offset3">
+		<form action="/add" method="get">
+		<input type="text" name="title" value="title" />
+		<input type="text" name="url" value="http://" />
+		<input class="btn primary" type="submit" value="Add" />
+		</form>
+	</div>
+</div>
 {% endblock %}
+
+
+<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/static/bookmarklet.js';})();">Bookmarklet</a>
 </div> <!-- //END BODY WRAPPER -->
 </body>
 </html>
